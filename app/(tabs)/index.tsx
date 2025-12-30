@@ -1,98 +1,155 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
+import React from "react";
+import useFetch from "@/services/usefetch";
+import {
+  fetchHighestRated,
+  fetchMovies,
+  fetchPopularReleases,
+} from "@/services/api";
+import { images } from "@/constants/images";
+import { icons } from "@/constants/icons";
+import SearchBar from "@/components/SearchBar";
+import { router } from "expo-router";
+import MovieCard from "@/components/MovieCard";
+import HomeGenreRow from "@/components/HomeGenreRow";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const Index = () => {
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError,
+  } = useFetch(() => fetchMovies({ query: "" }));
 
-export default function HomeScreen() {
+  const {
+    data: popularMovies,
+    loading: popularLoading,
+    error: popularError,
+  } = useFetch(() => fetchPopularReleases());
+
+  const {
+    data: highestMovies,
+    loading: highestLoading,
+    error: highestError,
+  } = useFetch(() => fetchHighestRated());
+
+  const HOME_GENRES = [
+    { id: 28, title: "High-Octane Action" },
+    { id: 10749, title: "Love & Emotion" },
+    { id: 18, title: "Powerful Drama" },
+    { id: 878, title: "Futuristic Visions" },
+  ];
+
+  const insets = useSafeAreaInsets();
+
+  const isLoading = moviesLoading || popularLoading || highestLoading;
+  const isError = moviesError || popularError || highestError;
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
+    <View className="flex-1 bg-primary">
+      <Image
+        source={images.bg}
+        className="absolute w-full z-0"
+        resizeMode="cover"
+      />
+      <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: insets.bottom + 60 }}
+      >
+        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            className="mt-10 self-center"
+          />
+        ) : isError ? (
+          <Text>Error in Fetching Movies</Text>
+        ) : (
+          <View className="flex-1 mt-5">
+            <SearchBar
+              onPress={() => {
+                router.push("/search");
+              }}
+              placeholder="Search for a movie"
             />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
+
+            <Text className="text-lg text-white font-bold mt-5 mb-3">
+              Latest Releases
+            </Text>
+
+            <FlatList
+              data={movies}
+              renderItem={({ item }) =>  <MovieCard {...item} />}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                gap: 16,
+                paddingRight: 20,
+              }}
+              className="mt-2 pb-10"
+              snapToAlignment="start"
+              decelerationRate="fast"
+            />
+            <Text className="text-lg text-white font-bold mb-3">
+              Latest Popular Releases
+            </Text>
+
+            <FlatList
+              data={popularMovies}
+              renderItem={({ item }) => <MovieCard {...item} />}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                gap: 16,
+                paddingRight: 20,
+              }}
+              className="mt-2 pb-10"
+              snapToAlignment="start"
+              decelerationRate="fast"
+            />
+
+            <Text className="text-lg text-white font-bold mb-3">
+              Highest Rated
+            </Text>
+
+            <FlatList
+              data={highestMovies}
+              renderItem={({ item }) => <MovieCard {...item} />}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                gap: 16,
+                paddingRight: 20,
+              }}
+              className="mt-2 pb-10"
+              snapToAlignment="start"
+              decelerationRate="fast"
+            />
+
+            {HOME_GENRES.map((genre) => (
+              <HomeGenreRow
+                key={genre.id}
+                genreId={genre.id}
+                title={genre.title}
               />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+            ))}
+          </View>
+        )}
+      </ScrollView>
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default Index;

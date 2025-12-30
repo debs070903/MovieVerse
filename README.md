@@ -1,50 +1,116 @@
-# Welcome to your Expo app 👋
+# 🎬 MovieVerse
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+MovieVerse is a modern **movie discovery mobile application** built using **Expo (React Native)** and **Supabase**.  
+The app allows users to explore, search, browse, and save movies using data from **TMDB**, with secure authentication and a clean, mobile-first user experience.
 
-## Get started
+This project was built as a **learning + demo application**, focusing on real-world app architecture, backend integration, and deployment workflows.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Features
 
-2. Start the app
+- 🔐 User authentication using Supabase Auth
+- 🔍 Search movies by title
+- 🎞️ Browse movies by genre, year, and rating
+- ❤️ Save movies to a personal collection
+- 👤 User profile & session management
+- ⚡ Fast and responsive UI with Expo & NativeWind
+- ☁️ Cloud backend powered by Supabase
+- 📱 Android demo build generated using Expo EAS
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🛠️ Tech Stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Frontend
+- React Native (Expo)
+- TypeScript
+- Expo Router
+- NativeWind (Tailwind CSS for React Native)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Backend
+- Supabase (Authentication + Database)
+- Row Level Security (RLS)
 
-## Get a fresh project
+### External API
+- TMDB (The Movie Database)
 
-When you're ready, run:
+---
 
+## 🚀 Demo
+
+### 📱 Android APK (Preview Build)
+
+An installable Android demo build generated using **Expo EAS Build**.
+
+🔗 **APK Download Link:**  
+https://expo.dev/accounts/debanik07/projects/movieverse/builds/87d388c6-1256-47a9-9f19-954871210015
+
+> Note: You may need to allow **“Install from unknown sources”** on Android.
+
+---
+
+## 📦 Local Installation & Setup
+
+### 1️⃣ Clone the repository
 ```bash
-npm run reset-project
+git clone https://github.com/debs070903/MovieVerse
+cd movieverse
+npm install
+````
+
+### 2️⃣ Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+EXPO_PUBLIC_TMDB_API_KEY=tmdb_api_key_here
+EXPO_PUBLIC_SUPABASE_URL=supabase_url_here
+EXPO_PUBLIC_SUPABASE_KEY=supabase_key_here
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+> ⚠️ Never expose the Supabase `service_role` key in the frontend.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3️⃣ Run the app locally
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+* Scan QR code with **Expo Go**
+* Or run on Android emulator
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🔐 Supabase Configuration
+
+* Enable Email Authentication
+* Configure required tables (e.g. saved_movies)
+* Apply Row Level Security (RLS) policies to ensure user-level data access
+* Use **anon public key only** in the client
+
+---
+
+## 📌 Project Origin & Attribution
+
+The initial setup and foundation of this project were inspired by a tutorial from **JS Mastery**.
+While the project started as a guided learning reference, it has since been **independently extended, redesigned, and implemented** with additional features, architecture decisions, and integrations — including Supabase authentication, custom browsing logic, custom logics for saving movies and deployment using Expo EAS.
+
+This project represents hands-on learning, experimentation, and original development beyond the initial reference material.
+
+---
+
+## 👨‍💻 Author
+
+**Debanik Dutta**
+
+* GitHub: [https://github.com/your-username](https://github.com/your-username)
+* LinkedIn: [https://linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+
+---
+
+## 📜 License
+
+This project is intended for learning, experimentation, and demo purposes.
