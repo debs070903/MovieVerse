@@ -44,7 +44,7 @@ This project was built as a **learning + demo application**, focusing on real-wo
 An installable Android demo build generated using **Expo EAS Build**.
 
 🔗 **APK Download Link:**  
-https://expo.dev/accounts/debanik07/projects/movieverse/builds/87d388c6-1256-47a9-9f19-954871210015
+[https://expo.dev/accounts/debanik07/projects/movieverse/builds/87d388c6-1256-47a9-9f19-954871210015](https://expo.dev/accounts/debanik07/projects/movieverse/builds/87d388c6-1256-47a9-9f19-954871210015)
 
 > Note: You may need to allow **“Install from unknown sources”** on Android.
 
@@ -106,8 +106,8 @@ This project represents hands-on learning, experimentation, and original develop
 
 **Debanik Dutta**
 
-* GitHub: [https://github.com/your-username](https://github.com/your-username)
-* LinkedIn: [https://linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
+* GitHub: [https://github.com/debs070903](https://github.com/debs070903)
+* LinkedIn: [https://www.linkedin.com/in/debanik-dutta-3347b8253](https://www.linkedin.com/in/debanik-dutta-3347b8253)
 
 ---
 
